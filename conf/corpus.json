@@ -1,6 +1,6 @@
 {
   "corpus_name": "evenki",
-  "citation": "Evenki corpus.",
+  "citation": "О. А. Казакевич, Е. Л. Клячко, Н. К. Митрофанова. Корпус эвенкийского языка (https://minlang.iling-ran.ru/corpora/evenki). Лицензия: https://creativecommons.org/licenses/by-sa/4.0/",
   "main_tiers": ["sentFon"],
   "aligned_tiers": ["rus", "evCyr"],
   "analysis_tiers": {"fonWord":"word", "fonConcat":"parts", "glConcat":"gloss"},
