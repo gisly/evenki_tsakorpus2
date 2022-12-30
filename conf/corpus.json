@@ -98,7 +98,8 @@
   "all_language_search_enabled": true,
   "gloss_search_enabled": true,
   "ambiguous_analyses": true,
-  "json_indent": -1
+  "json_indent": -1,
+  "lang_props": {}
 
 
 }
