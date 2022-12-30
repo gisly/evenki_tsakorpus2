@@ -2,7 +2,6 @@
 **.idea/**
 txt2json/corpus/json/**
 txt2json/corpus/txt/**
-corpus/**
 src_convertors/corpus/**
 search/media/**
 search/tmp/**
