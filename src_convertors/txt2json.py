@@ -74,9 +74,11 @@ class Txt2JSON:
         Clean the error log file, if any.
         """
         try:
+            print("!!!!", os.path.join(self.settingsDir, 'conversion_settings.json'))
             fCorpus = open(os.path.join(self.settingsDir, 'conversion_settings.json'), 'r',
                            encoding='utf-8-sig')
-        except IOError:
+        except IOError as e:
+            print("!!!!!", str(e))
             # Obsolete settings file name; I keep it here for backward compatibility
             fCorpus = open(os.path.join(self.settingsDir, 'corpus.json'), 'r',
                            encoding='utf-8-sig')

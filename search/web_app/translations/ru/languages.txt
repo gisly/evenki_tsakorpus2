@@ -26,6 +26,8 @@ english	английский
 english_note	английский (комментарии)
 erzya	эрзянский
 estonian	эстонский
+evenki	эвенкийский
+evenkiTr	эвенкийский (транслит)
 finnish	финский
 french	французский
 german	немецкий

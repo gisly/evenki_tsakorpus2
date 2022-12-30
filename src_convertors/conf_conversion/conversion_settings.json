@@ -1,6 +1,6 @@
 {
   "corpus_name": "",
-  "corpus_dir": "corpus",
+  "corpus_dir": "evenki",
   "meta_filename": "meta.csv",
   "error_log": "error.log",
   "meta_fields":
