@@ -2,6 +2,9 @@
 # sys.path.insert(0, '.../')
 # sys.path.insert(0, '.../app/')
 
+os.chdir('/home/gisly/evenki_tsakorpus2/search')
+sys.path.append('/home/gisly/evenki_tsakorpus2/search')
+
 from web_app import app as application, get_locale as app_get_locale
 from flask_babel import Babel
 
