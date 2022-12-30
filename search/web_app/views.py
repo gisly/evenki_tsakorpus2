@@ -19,7 +19,7 @@ from .auxiliary_functions import jsonp, gzipped, nocache, lang_sorting_key, copy
     distance_constraints_too_complex, remove_sensitive_data, log_query
 from .search_pipelines import *
 
-
+@app.route('/')
 @app.route('/search')
 @app.route('/search_minimalistic')
 def search_page():
