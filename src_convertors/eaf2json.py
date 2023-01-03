@@ -919,12 +919,12 @@ class Eaf2JSON(Txt2JSON):
         self.write_output(fnameTarget, textJSON)
         return nTokens, nWords, nAnalyzed
 
-    def process_corpus(self, cutMedia=True):
+    def process_corpus(self, cutMedia=True, filenames_to_process=[]):
         """
         Take every eaf file from the source directory subtree, turn it
         into a parsed json and store it in the target directory.
         """
-        Txt2JSON.process_corpus(self)
+        Txt2JSON.process_corpus(self, filenames_to_process=filenames_to_process)
         if not cutMedia:
             return
         mediaDir = os.path.join(self.corpusSettings['corpus_dir'], self.srcExt)
@@ -949,5 +949,6 @@ class Eaf2JSON(Txt2JSON):
 
 
 if __name__ == '__main__':
+    filenames_to_process = ['2019_Tugur_SolovyovaKlavdiyaV_LB1_transliterated']
     t2j = Eaf2JSON()
-    t2j.process_corpus(cutMedia=True)
+    t2j.process_corpus(cutMedia=True, filenames_to_process=filenames_to_process)

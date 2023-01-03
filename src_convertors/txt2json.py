@@ -281,7 +281,7 @@ class Txt2JSON:
         self.write_output(fnameTarget, textJSON)
         return nTokens, nWords, nAnalyze
 
-    def process_corpus(self):
+    def process_corpus(self, filenames_to_process=[]):
         """
         Take every text file from the source directory subtree, turn it
         into a parsed json and store it in the target directory.
@@ -300,6 +300,9 @@ class Txt2JSON:
         for path, dirs, files in os.walk(srcDir):
             for filename in files:
                 if not filename.lower().endswith('.' + self.srcExt):
+                    continue
+                if filenames_to_process and filename.split('.')[0] not in filenames_to_process:
+                    print("File not in list: "  + ','.join(filenames_to_process))
                     continue
                 targetPath = path.replace(srcDir, targetDir)
                 if targetPath == path:
