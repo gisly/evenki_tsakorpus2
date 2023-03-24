@@ -508,12 +508,15 @@ def send_text_html(doc_fname):
     if not doc_fname.endswith('.json'):
         doc_fname += '.json'
     try:
-        with open(os.path.join('corpus_html',
+        filename = os.path.join('corpus_html',
                                settings.corpus_name,
-                               doc_fname),
+                               doc_fname)
+        print("Trying to open " + filename)
+        with open(filename,
                   'r', encoding='utf-8') as fText:
             data = json.load(fText)
-    except FileNotFoundError:
+    except FileNotFoundError as e:
+        print("Error processing file: " + str(e))
         data = {
             'meta': {},
             'rows': [],
@@ -524,7 +527,8 @@ def send_text_html(doc_fname):
     page = request.args.get('page', 1)
     try:
         page = int(page) - 1
-    except:
+    except Exception as e:
+        print("Error processing page: " + str(e))
         page = 0
     if page < 0:
         page = 0
