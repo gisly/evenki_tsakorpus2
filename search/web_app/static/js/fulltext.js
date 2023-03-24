@@ -11,7 +11,7 @@ function assign_input_events() {
 	$("a.locale").click(change_locale);
 	$("#viewing_mode").change(toggle_interlinear);
 	$('.toggle_glossed_layer').click(toggle_glossed_layer);
-	assign_tooltips();
+	//assign_tooltips();
 }
 
 function assign_word_events() {
