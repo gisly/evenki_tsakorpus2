@@ -127,7 +127,10 @@ class JSON2HTML:
             fname = secure_filename(dataFinal['meta']['fulltext_id'])
         if len(fname) <= 0:
             return
-        print(fname)
+        if nTiers <= 0 or len(curPointers) <= 0 or len (htmlByTier) <= 0:
+            print('No HTML generated for ' + fnameIn)
+            return
+
         while curPointers[0] < len(htmlByTier[0]):
             curParagraph = [''] * nTiers
             curParagraph[0] = self.finalize_html_sentence(htmlByTier[0][curPointers[0]]['html'])
