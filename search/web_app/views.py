@@ -511,6 +511,7 @@ def send_text_html(doc_fname):
         filename = os.path.join('corpus_html',
                                settings.corpus_name,
                                doc_fname)
+        print("Current working directory: " + os.getcwd())
         print("Trying to open " + filename)
         with open(filename,
                   'r', encoding='utf-8') as fText:
