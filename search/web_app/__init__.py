@@ -145,8 +145,9 @@ app.config.update(dict(
     LANGUAGES=settings.interface_languages,
     BABEL_DEFAULT_LOCALE=settings.default_locale,
     BABEL_TRANSLATION_DIRECTORIES='translations_pybabel',
-    SESSION_COOKIE_SAMESITE=None,
+    SESSION_COOKIE_SAMESITE="None",
     SESSION_COOKIE_NAME='tsakorpus_session',
+    SESSION_COOKIE_SECURE=True
 ))
 
 if settings.session_cookie_domain is not None and len(settings.session_cookie_domain) > 0:
