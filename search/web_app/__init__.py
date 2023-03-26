@@ -128,8 +128,7 @@ try:
         # number of lemmata for each frequency rank
         settings.lemma_freq_by_rank.append(sentView.extract_cumulative_freq_by_rank(sc.get_lemma_freq_by_rank(lang)))
     settings.ready_for_work = True
-except (ConnectionError, NotFoundError) as e:
-    print(str(e))
+except (ConnectionError, NotFoundError):
     # Elasticsearch is down
     settings.corpus_size = 0
     for lang in settings.languages:
@@ -146,7 +145,7 @@ app.config.update(dict(
     LANGUAGES=settings.interface_languages,
     BABEL_DEFAULT_LOCALE=settings.default_locale,
     BABEL_TRANSLATION_DIRECTORIES='translations_pybabel',
-    SESSION_COOKIE_SAMESITE='None',
+    SESSION_COOKIE_SAMESITE='Lax',
     SESSION_COOKIE_NAME='tsakorpus_session'
 ))
 
