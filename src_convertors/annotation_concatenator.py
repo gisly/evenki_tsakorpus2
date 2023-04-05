@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*
 import re
 import shutil
-
+import nltk
+from nltk.collocations import *
+import numpy as np
+from scipy import stats
+import pandas as pd
 __author__ = "gisly"
 
 
@@ -47,6 +51,7 @@ def create_parent_tier_from_annotation_concatenation(filename, new_filename,
 
 
     srcTree.write(new_filename)
+
 
 def create_child_tier_from_annotation_concatenation(filename, new_filename,
                                                     parent_tier, tier_to_concatenate, new_tier_name,
@@ -348,14 +353,215 @@ def is_grammar_gloss(gloss):
 
 
 
+def export_all_sentences_from_file(filename, tier_name, child_name, grandchild_name):
+    sentences = []
+    words = []
+    stems = []
+    srcTree = etree.parse(filename)
+    parent_tier_elements = srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                        tier_name  + '"]')
+    tier_numbers = ['']
+    if not parent_tier_elements:
+        tier_numbers = ['1', '2']
+
+    for tier_number in tier_numbers:
+        for alignable_annotation in srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                  tier_name + tier_number + '"]/ANNOTATION/'
+                                                                              'ALIGNABLE_ANNOTATION'):
+            parent_id = alignable_annotation.attrib['ANNOTATION_ID']
+            sentence = ''
+            for word_annotation_ref in srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                      child_name + tier_number + '"]/ANNOTATION/'
+                                                             'REF_ANNOTATION[@ANNOTATION_REF="' + parent_id + '"]'):
+
+                child_id = word_annotation_ref.attrib['ANNOTATION_ID']
+                word_text = word_annotation_ref.find('ANNOTATION_VALUE').text
+                words.append(word_text)
+                for morpheme_annotation_ref in srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                    grandchild_name + tier_number + '"]/ANNOTATION/'
+                                                                               'REF_ANNOTATION[@ANNOTATION_REF="' + child_id + '"]/ANNOTATION_VALUE'):
+                    morpheme_text = morpheme_annotation_ref.text
+                    if not morpheme_text.startswith('-') and not morpheme_text.startswith('='):
+                        sentence += ' ' + morpheme_text
+                        stems.append(morpheme_text)
+
+            sentences.append(sentence.strip())
+    return words, stems, sentences
+
+def export_all_sentences(folder_name, tier_name, child_name, grandchild_name):
+    sentences = []
+    words = []
+    stems = []
+    for filename in os.listdir(folder_name):
+        if not filename.endswith('.eaf'):
+            continue
+        full_filename = os.path.join(folder_name, filename)
+        words_file, stems_file, sentences_file = export_all_sentences_from_file(full_filename, tier_name, child_name, grandchild_name)
+        sentences += sentences_file
+        words += words_file
+        stems += stems_file
+    output_filename = os.path.join(folder_name, 'out.txt')
+    with open(output_filename, 'w', encoding='utf-8', newline='') as fout:
+        for sentence in sentences:
+            fout.write(sentence.strip() + '\n')
+    return words, stems
+
+def count_words_in_file(filename, tier_name, childtier_name=None, words=None):
+    word_count = 0
+    total_word_count = 0
+    srcTree = etree.parse(filename)
+    parent_tier_elements = srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                         tier_name + '"]')
+    tier_numbers = ['']
+    if not parent_tier_elements:
+        tier_numbers = ['1', '2']
+
+    for tier_number in tier_numbers:
+        total_word_count += len(srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                             tier_name + tier_number + '"]/ANNOTATION/REF_ANNOTATION/ANNOTATION_VALUE'))
+        if words is None:
+            word_count = len(srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                             tier_name + tier_number + '"]/ANNOTATION/REF_ANNOTATION/ANNOTATION_VALUE'))
+        else:
+            for word_annotation_ref in srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                            tier_name + tier_number + '"]/ANNOTATION/REF_ANNOTATION'):
+                child_id = word_annotation_ref.attrib['ANNOTATION_ID']
+                for morpheme_annotation_ref in srcTree.xpath('/ANNOTATION_DOCUMENT/TIER[@TIER_ID="' +
+                                                             childtier_name + tier_number + '"]/ANNOTATION/'
+                                                                               'REF_ANNOTATION[@ANNOTATION_REF="' + child_id + '"]/ANNOTATION_VALUE'):
+                    morpheme_text = morpheme_annotation_ref.text
+                    if not morpheme_text.startswith('-') and not morpheme_text.startswith('=') and morpheme_text in words:
+                        word_count += 1
+
+
+    return word_count, total_word_count
+
+
+def get_text_group(meta_filename, meta_number):
+    texts_groups = dict()
+    with open(meta_filename, 'r', encoding='utf-8') as fin:
+        for line in fin:
+            line_parts = line.strip().split('\t')
+            texts_groups[line_parts[0]] = line_parts[meta_number]
+    return texts_groups
+
+def count_words_by(folder_name, meta_filename, meta_number):
+    groups_count = dict()
+    texts_groups = get_text_group(meta_filename, meta_number)
+    for filename in os.listdir(folder_name):
+        if not filename.endswith('.eaf'):
+            continue
+        full_filename = os.path.join(folder_name, filename)
+        group = texts_groups[filename]
+        word_count, total_word_count = count_words_in_file(full_filename, 'fonWord')
+        if group in texts_groups:
+            groups_count[group] += word_count
+        else:
+            groups_count[group] = word_count
+    groups_sorted = sorted(list(groups_count.keys()))
+    for group_sorted in groups_sorted:
+        print(group_sorted + '\t' + str(groups_count[group_sorted]))
+
+
+def count_words_by_settlements(folder_name, meta_filename):
+    count_words_by(folder_name, meta_filename, 3)
+
+
+def count_words_by_persons(folder_name, meta_filename):
+    count_words_by(folder_name, meta_filename, 1)
+
+
+def split_and_count_word(folder_name, meta_filename, word_list):
+    texts_groups = get_text_group(meta_filename, 3)
+    person_name_text_groups = dict()
+    person_name_group_texts = dict()
+    person_name_group_texts[0] = 0
+    person_name_group_texts[1] = 0
+    for text, group in texts_groups.items():
+        place = group.split(' ')[0]
+        print(place)
+        """if place in ['Чиринда', 'Эконда', 'Тутончаны', 'Ербогачён', 'Хантайское',
+                     'Советская', 'Большое', 'Озеро', 'Кислокан', 'Юкта', 'Виви', 'Тура', '',
+                     'Учами', 'Потапово']:"""
+        if place in ['Чиринда']:
+            person_name_text_groups[text] = 0
+            person_name_group_texts[0] += 1
+        else:
+            person_name_text_groups[text] = 1
+            person_name_group_texts[1] += 1
+    groups_word_count = dict()
+    for filename in os.listdir(folder_name):
+        if not filename.endswith('.eaf'):
+            continue
+        full_filename = os.path.join(folder_name, filename)
+        group = person_name_text_groups[filename]
+        word_count, total_words = count_words_in_file(full_filename, 'fonWord', childtier_name='fon', words=word_list)
+        freq = word_count / float(total_words)
+        if freq > 0 and group > 0:
+            print(filename)
+        if group in groups_word_count:
+            groups_word_count[group].append(freq)
+        else:
+            groups_word_count[group] = [freq]
+    return groups_word_count[0], groups_word_count[1]
+
+def check_normality(data):
+    test_stat_normality, p_value_normality=stats.shapiro(data)
+    print("p value:%.4f" % p_value_normality)
+    if p_value_normality <0.05:
+        print("Reject null hypothesis >> The data is not normally distributed")
+    else:
+        print("Fail to reject null hypothesis >> The data is normally distributed")
 
 def main():
-    preprocess_folder("D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki//test//",
+    """preprocess_folder("D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki//test//",
                       "D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki/eaf",
                       "D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki",
                       "ev",
                       ['']
-                      )
+                      )"""
+
+    """all_words, all_stems = export_all_sentences("D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki/eaf", "sentFon",
+                         "fonWord", "fon")"""
+
+    """count_words_by_persons("D://CompLing/CorpusUtils/tsakorpus/corpus/evenki/eaf",
+                               "D://CompLing/CorpusUtils/tsakorpus/corpus/evenki/meta.csv")"""
+    """filename = 'D://Evenki/EvenkiLiterature/pushkin_dubrovskiy/dubrovskiy_evenki_book.txt'
+    sentences_book = []
+    text = ''
+    with open(filename, 'r', encoding='utf-8') as fin:
+        for line in fin:
+            text += line.strip()
+    sentences_book = re.split('[\.\!\?]', text)
+    filename_out = filename + '_out.txt'
+    with open(filename_out, 'w', encoding='utf-8', newline='') as fout:
+        for sentence_book in sentences_book:
+            sentence_book = sentence_book.strip()
+            sentence_book = sentence_book.replace('- ', '')
+            sentence_book = sentence_book.replace('„', '"')
+            sentence_book = sentence_book.replace('“', '"')
+            if sentence_book != '':
+                fout.write(sentence_book + '\n')"""
+
+    """
+    bigram_measures = nltk.collocations.BigramAssocMeasures()
+    trigram_measures = nltk.collocations.TrigramAssocMeasures()
+    fourgram_measures = nltk.collocations.QuadgramAssocMeasures()
+
+    finder = TrigramCollocationFinder.from_words(all_stems)
+    finder.apply_freq_filter(3)
+    tuples = finder.nbest(trigram_measures.pmi, 10)
+    for tuple in tuples:
+        print(' '.join(tuple))"""
+    group1, group2 = split_and_count_word("D://CompLing/CorpusUtils/tsakorpus/corpus/evenki/eaf",
+                           "D://CompLing/CorpusUtils/tsakorpus/corpus/evenki/meta.csv",
+                         ["oldo", "huru"])
+
+    group1 = np.array(group1)
+    group2 = np.array(group2)
+    print(group1, group2)
+    check_normality(group1)
+    check_normality(group2)
 
 if __name__ == '__main__':
     main()
@@ -390,3 +596,4 @@ create_child_gloss_tier_from_annotation_concatenation(
 
 copy_media("D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki/test",
            "D://CompLing/CorpusUtils/tsakonian_corpus_platform/corpus/evenki/eaf/media")"""
+
