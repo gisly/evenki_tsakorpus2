@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ANNOTATION_DOCUMENT AUTHOR="unspecified"
-    DATE="2021-03-07T17:35:00+03:00" FORMAT="3.0" VERSION="3.0"
+    DATE="2024-06-23T14:10:30+03:00" FORMAT="3.0" VERSION="3.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/EAFv3.0.xsd">
     <HEADER MEDIA_FILE="" TIME_UNITS="milliseconds">
         <MEDIA_DESCRIPTOR
@@ -137,8 +137,8 @@
         <TIME_SLOT TIME_SLOT_ID="ts118" TIME_VALUE="267560"/>
         <TIME_SLOT TIME_SLOT_ID="ts119" TIME_VALUE="269230"/>
         <TIME_SLOT TIME_SLOT_ID="ts120" TIME_VALUE="269230"/>
-        <TIME_SLOT TIME_SLOT_ID="ts121" TIME_VALUE="284500"/>
-        <TIME_SLOT TIME_SLOT_ID="ts122" TIME_VALUE="284500"/>
+        <TIME_SLOT TIME_SLOT_ID="ts121" TIME_VALUE="284420"/>
+        <TIME_SLOT TIME_SLOT_ID="ts122" TIME_VALUE="284420"/>
     </TIME_ORDER>
     <TIER DEFAULT_LOCALE="ru" LINGUISTIC_TYPE_REF="txt" TIER_ID="&lt;linguist>">
         <ANNOTATION>
@@ -325,7 +325,7 @@
         </ANNOTATION>
         <ANNOTATION>
             <ALIGNABLE_ANNOTATION ANNOTATION_ID="a975"
-                TIME_SLOT_REF1="ts119" TIME_SLOT_REF2="ts121">
+                TIME_SLOT_REF1="ts119" TIME_SLOT_REF2="ts122">
                 <ANNOTATION_VALUE>Бэйдэ гиркунэпкӣл энэл дюлоски исэттэ.</ANNOTATION_VALUE>
             </ALIGNABLE_ANNOTATION>
         </ANNOTATION>
@@ -5263,7 +5263,7 @@
         </ANNOTATION>
         <ANNOTATION>
             <ALIGNABLE_ANNOTATION ANNOTATION_ID="sentFon_a975"
-                TIME_SLOT_REF1="ts120" TIME_SLOT_REF2="ts122">
+                TIME_SLOT_REF1="ts120" TIME_SLOT_REF2="ts121">
                 <ANNOTATION_VALUE>bəjdə girkunəpkīl ənəl ďuloski isəttə.</ANNOTATION_VALUE>
             </ALIGNABLE_ANNOTATION>
         </ANNOTATION>
