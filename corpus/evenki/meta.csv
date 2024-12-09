@@ -100,7 +100,7 @@ filename	author	year	recplace	title	genre	year_from	year_to	site_url	gender	dial
 2016_Yerbogachyon_TsurkanII_LB1_transliterated.eaf	Цуркан Ия Ивановна	2016	Ербогачён	Как забудешь?	lifestory	2016	2016	https://siberian-lang.srcc.msu.ru/ru/text/kak-zabudesh-i-i-curkan	f	Yerbogachyon	Northern
 2016_Yerbogachyon_TsurkanII_LR2_transliterated.eaf	Цуркан Ия Ивановна	2016	Ербогачён	Медведь	lifestory	2016	2016	https://siberian-lang.srcc.msu.ru/ru/node/4889424/	f	Yerbogachyon	Northern
 2016_Yerbogachyon_TsurkanII_LF_1_transliterated.eaf	Цуркан Ия Ивановна	2016	Ербогачён	Моя бабушка рассказывала	folklore	2016	2016	https://siberian-lang.srcc.msu.ru/ru/node/4889423	f	Yerbogachyon	Northern
-2018_Tokma_Gorbunov_LO_transliterated.eaf	Горбунов Геннадий Сергеевич	2018	Токма	В верховьях	lifestory	2016	2016	https://siberian-lang.srcc.msu.ru/ru/node/4889437	m	Tokma-Upper Lena	Eastern
+2018_Tokma_Gorbunov_LO_transliterated.eaf	Горбунов Геннадий Сергеевич	2018	Токма	В верховьях	lifestory	2016	2016	https://siberian-lang.srcc.msu.ru/ru/node/4889437	m	TokmaUpperLena	Eastern
 Arch_Lebedeva_1952_Tutonchany_Khutokogir_Momondo.eaf	Хутокогир Ольга Васильевна	1952	Тутончаны	Момондо	folklore	1952	1952	https://siberian-lang.srcc.msu.ru/ru/text/momondo	f	Ilimpeya	Northern
 Arch_Lebedeva_1952_Uchami_Bukharev_BearCub_new.eaf	Бухарев Вениамин	1952	Учами	Мы убили медвежонка	lifestory	1952	1952	https://siberian-lang.srcc.msu.ru/ru/text/my-ubili-medvezhonka-v-buharev	m	Podkamennaya Tunguska	Southern
 Arch_Lebedeva_1952_Uchami_Bukharov_Summer_transliterated.eaf	Бухарев Вениамин	1952	Учами	Летом	lifestory	1952	1952	https://siberian-lang.srcc.msu.ru/ru/text/letom-v-buharev	m	Podkamennaya Tunguska	Southern
@@ -118,8 +118,8 @@ Arch_Levedeva_1952_Vivi_Mukto_LO1.eaf	Мукто Антон Валентинов
 2019_Algazeya_KolesovVN_LO1_transliterated.eaf	Колесов Валерьян Николаевич	2019	Алгазея	Ночной ходок	lifestory	2019	2019	https://siberian-lang.srcc.msu.ru/ru/node/4889483	m	Tugur-Chumikan	Eastern
 2021_Ayan_AmosovaVI_P_transliterated.eaf	Амосова Варвара Иннокентьевна	2021	Аян	Песня-импровизация	folklore	2021	2021	https://siberian-lang.srcc.msu.ru/ru/node/4889480/	f	Totta	Eastern
 2021_Nelkan_BorisovaON_LR_transliterated.eaf	Борисова Ольга Николаевна	2021	Нелькан	Как моя мама лечила	lifestory	2021	2021	https://siberian-lang.srcc.msu.ru/ru/node/4889486/	f	Uchur-Zeya	Eastern
-2022_Iyengra_KargapolovaAlbinaSergeyevna_LR1_transliterated.eaf	Каргаполова Альбина Сергеевна	2022	Иенгра	Род	lifestory	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889499	f	Upper Aldan	Eastern
-2022_Iyengra_ZakharovaSvetlanaNikolayevna_LR1_transliterated.eaf	Захарова Светлана Николаевна	2022	Иенгра	В Покровск	lifestory	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889507	f	Upper Aldan	Eastern
+2022_Iyengra_KargapolovaAlbinaSergeyevna_LR1_transliterated.eaf	Каргаполова Альбина Сергеевна	2022	Иенгра	Род	lifestory	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889499	f	UpperAldan	Eastern
+2022_Iyengra_ZakharovaSvetlanaNikolayevna_LR1_transliterated.eaf	Захарова Светлана Николаевна	2022	Иенгра	В Покровск	lifestory	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889507	f	UpperAldan	Eastern
 2022_Ust-Nyukzha_NikolayevValeriyAndreyevich_FSham1_transliterated.eaf	Николаев Валерий Андреевич	2022	Усть-Нюкжа	Болезнь	folklore	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889518	m	Vitim-Tungir-Olyokma	Eastern
 2022_Ust-Nyukzha_NikolayevValeriyAndreyevich_LR1_transliterated.eaf	Николаев Валерий Андреевич	2022	Усть-Нюкжа	Бобай	lifestory	2022	2022	https://siberian-lang.srcc.msu.ru/ru/node/4889495	m	Vitim-Tungir-Olyokma	Eastern
 2023_Tupik_SakharovaTatyanaSemyonovna_LB1_transliterated.eaf	Сахарова Татьяна Семеновна	2023	Тупик	Чужеродцы	lifestory	2023	2023	https://siberian-lang.srcc.msu.ru/ru/node/4889511	f	Vitim-Tungir-Olyokma	Eastern
