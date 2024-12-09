@@ -48,6 +48,20 @@
         "genre_kw": {
           "type": "keyword"
         },
+        "dialect": {
+          "type": "text",
+          "analyzer": "lowercase_normalizer"
+        },
+        "dialect_kw": {
+          "type": "keyword"
+        },
+        "dialect_group": {
+          "type": "text",
+          "analyzer": "lowercase_normalizer"
+        },
+        "dialect_group_kw": {
+          "type": "keyword"
+        },
         "year": {
           "type": "integer"
         },

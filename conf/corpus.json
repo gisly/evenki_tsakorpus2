@@ -30,7 +30,9 @@
     "genre",
     "year_from",
     "year_to",
-	"site_url"
+	"site_url",
+    "dialect",
+    "dialect_group"
   ],
   "meta_fields": [
     "filename",
@@ -42,7 +44,9 @@
     "year_from",
     "year_to",
 	"site_url",
-    "gender"
+    "gender",
+    "dialect",
+    "dialect_group"
   ],
   "meta_files_case_sensitive": "false",
   "sentence_meta": [
@@ -63,6 +67,26 @@
         {"type": "input_text", "name": "genre", "placeholder": "Genre"},
         {"type": "option", "name": "genre", "value": "folklore", "text": "folklore"},
         {"type": "option", "name": "genre", "value": "lifestory", "text": "lifestory"}
+      ],
+      [
+        {"type": "input_text", "name": "dialect", "placeholder": "Dialect"},
+        {"type": "option", "name": "dialect", "value": "Ilimpeya", "text": "Ilimpeya"},
+        {"type": "option", "name": "dialect", "value": "Yerbogachyon", "text": "Yerbogachyon"},
+        {"type": "option", "name": "dialect", "value": "Sym", "text": "Sym"},
+        {"type": "option", "name": "dialect", "value": "Podkamennaya Tunguska", "text": "Podkamennaya Tunguska"},
+        {"type": "option", "name": "dialect", "value": "Vitim-Tungir-Olyokma", "text": "Vitim-Tungir-Olyokma"},
+        {"type": "option", "name": "dialect", "value": "Tokma-Upper Lena", "text": "Tokma-Upper Lena"},
+        {"type": "option", "name": "dialect", "value": "Upper Aldan", "text": "Upper Aldan"},
+        {"type": "option", "name": "dialect", "value": "Uchur-Zeya", "text": "Uchur-Zeya"},
+        {"type": "option", "name": "dialect", "value": "Totta", "text": "Totta"},
+        {"type": "option", "name": "dialect", "value": "Tugur-Chumikan", "text": "Tugur-Chumikan"}
+      ]
+      ,
+      [
+        {"type": "input_text", "name": "dialect_group", "placeholder": "Dialect group"},
+        {"type": "option", "name": "dialect_group", "value": "Northern", "text": "Northern"},
+        {"type": "option", "name": "dialect_group", "value": "Southern", "text": "Southern"},
+        {"type": "option", "name": "dialect_group", "value": "Eastern", "text": "Eastern"}
       ]
     ],
     "stat_options": [
@@ -70,7 +94,9 @@
       "author",
       "title",
       "year",
-      "recplace"
+      "recplace",
+      "dialect",
+      "dialect_group"
     ]
   },
   "word_fields":
@@ -99,7 +125,7 @@
   "gloss_search_enabled": true,
   "ambiguous_analyses": true,
   "json_indent": -1,
-  "lang_props": {}
-
+  "lang_props": {},
+  "media_dir": "corpus/evenki/test_media"
 
 }

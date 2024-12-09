@@ -69,3 +69,5 @@ year_from	Year: from
 year_post	Year (post-level)
 year_publ	Publication year
 year_to	Year: to
+dialect_group	Dialect group
+recplace	Recording place
