@@ -1,0 +1,33 @@
+# Local-desktop development overlay.
+#
+# This file is NOT auto-loaded -- you have to pass it explicitly:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# Or set the COMPOSE_FILE environment variable in your shell rc:
+#
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+#
+# The base docker-compose.yml is configured for production (nginx bound to
+# 127.0.0.1:8080, behind host Apache). This overlay makes it usable from
+# your desktop browser directly at http://localhost:8080/corpus/.
+#
+# Naming it docker-compose.dev.yml instead of docker-compose.override.yml
+# is deliberate: docker-compose.override.yml would be picked up automatically
+# even on the server, which would be a foot-gun.
+
+services:
+
+  nginx:
+    # Replace the production '127.0.0.1:8080:80' binding with one open to
+    # the host so you can reach it from your desktop browser.
+    # The !override tag prevents compose from appending instead of replacing.
+    ports: !override
+      - "8080:80"
+
+  elasticsearch:
+    # More headroom for dev iteration on a typical laptop.
+    mem_limit: 2g
+
+  tsakorpus:
+    mem_limit: 1g

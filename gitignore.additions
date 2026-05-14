@@ -1,0 +1,5 @@
+# Add these lines to .gitignore (anywhere; conventionally at the bottom)
+
+# Docker deployment runtime files
+/media/
+/deploy/nginx/conf.d/htpasswd

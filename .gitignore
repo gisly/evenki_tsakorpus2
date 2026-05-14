@@ -56,3 +56,6 @@ query_log.txt
 *.pfsx
 *.wav
 *.mp4
+# Docker deployment runtime files
+/media/
+/deploy/nginx/conf.d/htpasswd

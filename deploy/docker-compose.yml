@@ -1,0 +1,88 @@
+# Base compose file. Production-oriented: nginx binds to 127.0.0.1:8080 only,
+# expecting host Apache to terminate TLS and proxy to it.
+#
+# For local desktop development, layer compose.override.yml on top:
+#   docker compose -f docker-compose.yml -f docker-compose.override.yml up
+# (docker compose picks up docker-compose.override.yml automatically when
+# you don't pass -f, so for dev you just run `docker compose up` from the
+# deploy/ directory.)
+#
+# Build context is the repository root (..), so the Dockerfile here can
+# COPY the application source directly.
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.28
+    container_name: tsakorpus-es
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.ml.enabled=false
+      - xpack.monitoring.collection.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+      nofile:  { soft: 65536, hard: 65536 }
+    mem_limit: 1700m
+    mem_reservation: 1g
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    # NOT exposing 9200 to the host. Only reachable on the docker network.
+    expose: ["9200"]
+    networks: [corpusnet]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9200/_cluster/health | grep -E 'green|yellow' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  tsakorpus:
+    build:
+      context: ..             # repo root -- so the Dockerfile can COPY the app
+      dockerfile: deploy/Dockerfile
+    container_name: tsakorpus-app
+    restart: unless-stopped
+    depends_on:
+      elasticsearch: { condition: service_healthy }
+    environment:
+      - TSAKORPUS_PREFIX=/corpus
+    volumes:
+      # Bind-mount the data dirs so updates don't need a rebuild.
+      # Conf is read-only -- if you edit corpus.json, restart the app
+      # container to pick it up.
+      - ../conf:/app/conf:ro
+      - ../corpus:/app/corpus
+      - ../media:/app/media:ro
+      - tsakorpus_tmp:/app/search/tmp
+    expose: ["7342"]
+    networks: [corpusnet]
+    mem_limit: 600m
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: tsakorpus-nginx
+    restart: unless-stopped
+    depends_on: [tsakorpus]
+    # Production: bind to localhost only. Host Apache proxies to us.
+    # Override in docker-compose.override.yml for local dev.
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ../media:/srv/media:ro
+    networks: [corpusnet]
+    mem_limit: 100m
+
+volumes:
+  es_data:
+  tsakorpus_tmp:
+
+networks:
+  corpusnet:
+    driver: bridge

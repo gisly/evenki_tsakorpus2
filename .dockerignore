@@ -1,0 +1,44 @@
+.git
+.gitignore
+.idea
+__pycache__
+*.pyc
+*.pyo
+docs/
+docs_dev/
+docs_doxygen/
+.env
+venv/
+env/
+ENV/
+
+# The corpus and media are bind-mounted at runtime, not baked into the image
+corpus/evenki/*.json
+corpus/evenki/*.gz
+corpus/evenki/*.json.gz
+media/
+search/media/
+search/tmp/
+search/corpus_html/
+
+# Archives and binaries
+*.zip
+*.7z
+*.rar
+*.gz
+*.wav
+*.mp4
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.webm
+
+# Skip the deploy dir itself -- the Dockerfile is read directly by buildkit,
+# not via the build context, and nothing else under deploy/ should land in
+# the image.
+deploy/nginx/
+deploy/apache/
+deploy/*.md
+deploy/docker-compose*.yml
+deploy/nginx/conf.d/htpasswd
