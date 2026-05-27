@@ -89,6 +89,17 @@ volumes:
   es_data:
   tsakorpus_tmp:
 
+autoheal:
+  image: willfarrell/autoheal:latest
+  container_name: tsakorpus-autoheal
+  restart: unless-stopped
+  environment:
+    - AUTOHEAL_CONTAINER_LABEL=all
+    - AUTOHEAL_INTERVAL=15
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  mem_limit: 50m
+
 networks:
   corpusnet:
     driver: bridge
