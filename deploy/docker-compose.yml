@@ -62,6 +62,12 @@ services:
     expose: ["7342"]
     networks: [corpusnet]
     mem_limit: 600m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:7342/corpus/', timeout=5).status==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
 
   nginx:
     image: nginx:1.27-alpine
