@@ -68,6 +68,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 120s
+    labels:
+      - autoheal.enable=true
 
   nginx:
     image: nginx:1.27-alpine
@@ -88,10 +90,11 @@ services:
   autoheal:
     image: willfarrell/autoheal:latest
     container_name: tsakorpus-autoheal
-    restart: unless-stopped
+    restart: always
     environment:
-      - AUTOHEAL_CONTAINER_LABEL=all
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
       - AUTOHEAL_INTERVAL=15
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=90
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     mem_limit: 50m
