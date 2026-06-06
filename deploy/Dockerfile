@@ -47,12 +47,12 @@ WORKDIR /app/search
 
 EXPOSE 7342
 
-# 2 workers x 4 threads is the sweet spot for a 4 GB host. Each worker
+# 1 worker x 4 threads is the sweet spot for a 4 GB host. Each worker
 # loads the full Flask app + a connection pool to ES. --timeout 120 lets
 # long ES queries finish (query_timeout in corpus.json is 60s).
 CMD ["gunicorn", \
      "--bind", "0.0.0.0:7342", \
-     "--workers", "2", \
+     "--workers", "1", \
      "--threads", "4", \
      "--worker-class", "gthread", \
      "--timeout", "120", \
