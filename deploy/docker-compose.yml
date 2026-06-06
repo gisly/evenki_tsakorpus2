@@ -79,7 +79,7 @@ services:
     # Bind to all interfaces on port 8081 so the cPanel host can reach us.
     # Host-level firewall restricts 8081 to the cPanel host's IP only.
     ports:
-      - "0.0.0.0:8081:80"
+      - "0.0.0.0:8080:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
