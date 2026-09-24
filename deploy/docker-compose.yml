@@ -58,6 +58,7 @@ services:
       - ../conf:/app/conf:ro
       - ../corpus:/app/corpus
       - ../media:/app/media:ro
+      - ../corpus_html:/app/search/corpus_html
       - tsakorpus_tmp:/app/search/tmp
     expose: ["7342"]
     networks: [corpusnet]
